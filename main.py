@@ -4,11 +4,12 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from PyPDF2 import PdfReader
 from docx import Document
 
-model = GPT2LMHeadModel.from_pretrained("gpt2")
-tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = GPT2LMHeadModel.from_pretrained("gpt2") #gpt2 model
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2") #tokenizer
 
 app = FastAPI()
 
+#function to extract the text from the uploaded file
 async def extract_text(file: UploadFile):
     file_type = file.filename.split(".")[-1].lower()
 
@@ -31,6 +32,7 @@ def summarize_text(text, max_new_tokens=100):
     summary_ids = model.generate(inputs, max_new_tokens=max_new_tokens, num_beams=4, early_stopping=True)
     return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
+#API for summarization
 @app.post("/summarize/")
 async def summarize_document(file: UploadFile = File(...)):
     text = await extract_text(file)

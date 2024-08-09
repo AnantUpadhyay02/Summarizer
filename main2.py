@@ -5,11 +5,10 @@ from transformers import pipeline
 from PyPDF2 import PdfReader
 from docx import Document
 
-# Initialize FastAPI app
 app = FastAPI()
 
 # CORS middleware for frontend integration
-origins = ["*"]
+origins = ["*"] #this star allows all port access
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-summarizer = pipeline("summarization")
+summarizer = pipeline("summarization") #transformers pipeline for summarization
 
 async def extract_text(file: UploadFile):
     file_type = file.filename.split(".")[-1].lower()
@@ -43,7 +42,7 @@ def summarize_text(text):
     summary = summarizer(text, max_length=150, min_length=40, do_sample=False)
     return summary[0]['summary_text']
 
-
+#the API for summarization
 @app.post("/summarize/")
 async def summarize_document(file: UploadFile = File(...)):
     text = await extract_text(file)
