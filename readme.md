@@ -2,7 +2,7 @@
 
 This repository contains a full-stack application designed to summarize documents using powerful language models. The backend is built with Python, and the frontend is implemented using React.
 
-![Preview](\Users\anantupadhyay\Summarizer\preview.png) 
+![Preview](./preview.png) 
 ## Features
 
 - **Document Upload**: Users can upload files (PDF, DOCX, TXT) directly through the frontend.
